@@ -5,7 +5,7 @@ const getAllTask = async (req, res) => {
     const allTask = await Task.find({});
 
     if (allTask.length < 1) {
-      res.status(400).json({ msg: "no task found" });
+      res.status(200).json({ msg: "no task found" });
     } else {
       res.status(200).json(allTask);
     }

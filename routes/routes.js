@@ -5,13 +5,13 @@ const {
   updateTask,
 } = require("../controller/controller");
 
-const express = require("express");
+const express = require("express"); 
 const router = express.Router();
 
 router.get("/", getAllTask); // done
 router.post("/", createTask); // done
 
-router.delete("/:id", deleteTask);
-router.patch("/:id", updateTask); // working
+router.delete("/:id", deleteTask); // done
+router.patch("/:id", updateTask); // done
 
 module.exports = router;

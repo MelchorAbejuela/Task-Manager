@@ -10,6 +10,9 @@ app.use(express.json()); // parse incoming json into object so it will be availa
 const routes = require("./routes/routes");
 app.use("/api/tasks", routes);
 
+const notFound = require("./middle_ware/not-found");
+app.use(notFound);
+
 const start = async () => {
   try {
     await connectDB(process.env.DB_CONNECTION_STRING);

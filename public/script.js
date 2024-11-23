@@ -6,20 +6,28 @@ const allTaskContainer = document.querySelector(".all-task-container");
 const getAllTask = async () => {
   const response = await axios.get("http://localhost:4000/api/tasks");
   const allTask = response.data;
-  const task = allTask.map((task) => {
-    const isChecked = task.completed === true;
 
-    return `<div class="single-task">
-            <p class="task-name">${task.task}</p>
-            <div class="buttons-container">
-                <button class="edit-button" data-taskId="${task._id}"></button>
-                <input type="checkbox" class="checkbox" ${
-                  isChecked ? "checked" : ""
-                } data-taskId="${task._id}">
-            </div>
-        </div>`;
-  });
-  allTaskContainer.innerHTML = task;
+  if (allTask.msg === `no task found`) {
+    return (allTaskContainer.innerHTML = `<p>${allTask.msg}</p>`);
+  } else {
+    const task = allTask.map((task) => {
+      const isChecked = task.completed === true;
+
+      return `<div class="single-task">
+              <p class="task-name">${task.task}</p>
+              <div class="buttons-container">
+                  <button class="edit-button" data-taskId="${
+                    task._id
+                  }"></button>
+                  <input type="checkbox" class="checkbox" ${
+                    isChecked ? "checked" : ""
+                  } data-taskId="${task._id}">
+              </div>
+          </div>`;
+    });
+
+    allTaskContainer.innerHTML = task;
+  }
 };
 getAllTask();
 
