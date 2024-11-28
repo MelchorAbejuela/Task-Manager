@@ -4,7 +4,7 @@ const allTaskContainer = document.querySelector(".all-task-container");
 
 // fetch all task
 const getAllTask = async () => {
-  const response = await axios.get("http://localhost:4000/api/tasks");
+  const response = await axios.get("/api/tasks");
   const allTask = response.data;
 
   if (allTask.msg === `no task found`) {
@@ -37,12 +37,9 @@ allTaskContainer.addEventListener("click", async (e) => {
     const taskId = e.target.getAttribute("data-taskId");
     const isChecked = e.target.checked;
 
-    const response = await axios.patch(
-      `http://localhost:4000/api/tasks/${taskId}`,
-      {
-        completed: `${isChecked}`,
-      }
-    );
+    const response = await axios.patch(`/api/tasks/${taskId}`, {
+      completed: `${isChecked}`,
+    });
   }
 });
 
@@ -51,13 +48,13 @@ const createTask = async () => {
   const taskName = inputTask.value;
 
   try {
-    const response = await axios.post("http://localhost:4000/api/tasks", {
+    const response = await axios.post("/api/tasks", {
       task: `${taskName}`,
     });
     inputTask.value = ``;
     getAllTask();
   } catch (error) {
-    console.log(error);
+    alert(`${error.response.data.msg}`);
   }
 };
 submitButton.addEventListener("click", (e) => {
@@ -88,10 +85,9 @@ allTaskContainer.addEventListener("click", async (e) => {
       .querySelector(".new-task-input").value;
 
     try {
-      const response = await axios.patch(
-        `http://localhost:4000/api/tasks/${taskId}`,
-        { task: `${newTask}` }
-      );
+      const response = await axios.patch(`/api/tasks/${taskId}`, {
+        task: `${newTask}`,
+      });
       getAllTask();
     } catch (error) {
       console.log(error);
@@ -105,9 +101,7 @@ allTaskContainer.addEventListener("click", async (e) => {
     const taskId = e.target.getAttribute("data-taskId");
 
     try {
-      const response = await axios.delete(
-        `http://localhost:4000/api/tasks/${taskId}`
-      );
+      const response = await axios.delete(`/api/tasks/${taskId}`);
       getAllTask();
     } catch (error) {
       console.log(error);

@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 
 const TaskSchema = mongoose.Schema({
-  task: String,
+  task: {
+    type: String,
+    required: [true, "cannot accept null value"],
+  },
   completed: {
     type: Boolean,
     default: false,

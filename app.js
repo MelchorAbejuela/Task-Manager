@@ -10,14 +10,18 @@ app.use(express.json()); // parse incoming json into object so it will be availa
 const routes = require("./routes/routes");
 app.use("/api/tasks", routes);
 
+const errorHandler = require("./middle_ware/error-handler");
+app.use(errorHandler);
+
 const notFound = require("./middle_ware/not-found");
 app.use(notFound);
 
+const port = process.env.PORT || 4000;
 const start = async () => {
   try {
     await connectDB(process.env.DB_CONNECTION_STRING);
-    app.listen(4000, () => {
-      console.log("Server is listening on port 4000");
+    app.listen(port, () => {
+      console.log(`Server is listening on port ${port}`);
     });
   } catch (error) {
     console.log(error);
